@@ -2,7 +2,7 @@
 layout: post
 title: Google Recon Hidden Trickes
 date: 2024-05-29
-summary: Writing First Blog
+summary: Google Recon Hidden Trickes With Less Captcha Solving
 categories: Research,Bug Bounty
 tags: [Reconnaissance, Intelligent Automation, Bug Bounty]
 ---
