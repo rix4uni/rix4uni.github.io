@@ -40,7 +40,7 @@ GitRepoEnum is an all-in-one reconnaissance tool designed for security researche
 
 ### Prerequisites
 
-```bash
+```yaml
 # Install TruffleHog for secret scanning
 git clone https://github.com/trufflesecurity/trufflehog.git
 cd trufflehog && go install
@@ -52,26 +52,26 @@ go install -v github.com/projectdiscovery/notify/cmd/notify@latest
 ### Installation Methods
 
 **Method 1: Go Install (Recommended)**
-```bash
+```yaml
 go install github.com/rix4uni/gitrepoenum@latest
 ```
 
 **Method 2: Prebuilt Binaries**
-```bash
+```yaml
 wget https://github.com/rix4uni/gitrepoenum/releases/download/v0.0.2/gitrepoenum-linux-amd64-0.0.2.tgz
 tar -xvzf gitrepoenum-linux-amd64-0.0.2.tgz
 mv gitrepoenum ~/go/bin/gitrepoenum
 ```
 
 **Method 3: Source Compilation**
-```bash
+```yaml
 git clone --depth 1 https://github.com/rix4uni/gitrepoenum.git
 cd gitrepoenum && go install
 ```
 
 ### Configuration Setup
 
-```bash
+```yaml
 # Create config directory
 mkdir -p ~/.config/gitrepoenum
 
@@ -103,17 +103,17 @@ scanning:
 ### 1. Multi-Source Repository Enumeration
 
 **Organization Reconnaissance**
-```bash
+```yaml
 echo "google" | gitrepoenum org --output google-repos.json
 ```
 
 **Member Discovery** 
-```bash
+```yaml
 echo "microsoft" | gitrepoenum member --output ms-members.json
 ```
 
 **User Enumeration**
-```bash
+```yaml
 echo "torvalds" | gitrepoenum user --output linus-repos.json
 ```
 
@@ -121,7 +121,7 @@ echo "torvalds" | gitrepoenum user --output linus-repos.json
 
 Focus your scanning on recent changes to save time and resources:
 
-```bash
+```yaml
 # Last 24 hours
 echo "shopify" | gitrepoenum org --date 24h
 
@@ -147,7 +147,7 @@ echo "facebook" | gitrepoenum org --date all
 ### 3. Advanced Repository Download
 
 **Parallel Cloning for Speed**
-```bash
+```yaml
 cat repos.txt | gitrepoenum download --parallel 20 --depth 10
 ```
 
@@ -159,18 +159,18 @@ cat repos.txt | gitrepoenum download --parallel 20 --depth 10
 ### 4. Comprehensive Commit Analysis
 
 **Extract Recent Commits**
-```bash
+```yaml
 gitrepoenum commit --input ./download --date 7d --output ./commits
 ```
 
 **Code Change Extraction**
-```bash
+```yaml
 gitrepoenum code --input ./download --output ./commits
 ```
 
 ### 5. Vulnerability Scanning with TruffleHog
 
-```bash
+```yaml
 gitrepoenum vuln --input ./commits --output ./vulnerabilities
 ```
 
@@ -188,7 +188,7 @@ The `leaksmoniter` command represents GitRepoEnum's most powerful feature - comp
 
 ### Complete Security Assessment Pipeline
 
-```bash
+```yaml
 echo "target-company" | gitrepoenum leaksmoniter \
   --scan-repo org,member \
   --date 7d \
@@ -209,7 +209,7 @@ This single command executes:
 ### Advanced LeaksMonitor Scenarios
 
 **Large Organization Assessment**
-```bash
+```yaml
 cat fortune-500.txt | gitrepoenum leaksmoniter \
   --scan-repo org,member \
   --date 30d \
@@ -219,7 +219,7 @@ cat fortune-500.txt | gitrepoenum leaksmoniter \
 ```
 
 **Continuous Monitoring Setup**
-```bash
+```yaml
 # Daily monitoring script
 echo "my-company" | gitrepoenum leaksmoniter \
   --scan-repo org,member,user \
@@ -229,7 +229,7 @@ echo "my-company" | gitrepoenum leaksmoniter \
 ```
 
 **Incident Response**
-```bash
+```yaml
 # Focus on very recent changes
 echo "compromised-org" | gitrepoenum leaksmoniter \
   --scan-repo org,member \
@@ -245,7 +245,7 @@ echo "compromised-org" | gitrepoenum leaksmoniter \
 
 **Scenario**: Security team needs to understand their organization's GitHub footprint.
 
-```bash
+```yaml
 echo $COMPANY_NAME | gitrepoenum leaksmoniter \
   --scan-repo org,member \
   --date all \
@@ -263,7 +263,7 @@ echo $COMPANY_NAME | gitrepoenum leaksmoniter \
 
 **Scenario**: Evaluate security posture of vendors and partners.
 
-```bash
+```yaml
 cat vendors.txt | gitrepoenum leaksmoniter \
   --scan-repo org \
   --date 90d \
@@ -275,7 +275,7 @@ cat vendors.txt | gitrepoenum leaksmoniter \
 
 **Scenario**: Technical due diligence for company acquisitions.
 
-```bash
+```yaml
 echo $TARGET_COMPANY | gitrepoenum leaksmoniter \
   --scan-repo org,member,user \
   --date all \
@@ -287,7 +287,7 @@ echo $TARGET_COMPANY | gitrepoenum leaksmoniter \
 
 **Scenario**: External penetration testing with limited initial access.
 
-```bash
+```yaml
 cat target-companies.txt | gitrepoenum leaksmoniter \
   --scan-repo org,member \
   --date 30d \
@@ -330,7 +330,7 @@ graph TB
 
 Maximize API rate limits with multiple tokens:
 
-```bash
+```yaml
 # Create token file with multiple tokens
 echo "ghp_token1
 ghp_token2
@@ -342,12 +342,12 @@ ghp_token5" > ~/.config/gitrepoenum/github-token.txt
 ### Performance Tuning
 
 **Memory Optimization**
-```bash
+```yaml
 GOGC=50 gitrepoenum leaksmoniter [options]
 ```
 
 **Network Optimization**
-```bash
+```yaml
 git config --global http.postBuffer 524288000
 git config --global http.lowSpeedLimit 0
 git config --global http.lowSpeedTime 999999
@@ -383,7 +383,7 @@ jobs:
 
 Process findings through your security information system:
 
-```bash
+```yaml
 # Export findings for SIEM ingestion
 find ~/.gitrepoenum/vuln -name "trufflehog.json" -exec cat {} \; | \
 jq -r 'select(.Verified==true) | .Raw' > vulnerabilities.txt
@@ -400,7 +400,7 @@ jq -r 'select(.Verified==true) | .Raw' > vulnerabilities.txt
 - Increase delay between requests
 - Use fine-grained personal access tokens
 
-```bash
+```yaml
 # Increased delay for rate limit compliance
 echo "large-org" | gitrepoenum leaksmoniter --delay 100ms
 ```
@@ -414,7 +414,7 @@ echo "large-org" | gitrepoenum leaksmoniter --delay 100ms
 - Increase Git timeouts
 - Use shallow cloning
 
-```bash
+```yaml
 # Conservative settings for unstable networks
 cat repos.txt | gitrepoenum download --parallel 5 --depth 1
 ```
@@ -470,7 +470,7 @@ GitRepoEnum represents a paradigm shift in GitHub security monitoring, transform
 
 Begin your GitHub security journey today:
 
-```bash
+```yaml
 # Install the tool
 go install github.com/rix4uni/gitrepoenum@latest
 
@@ -491,5 +491,6 @@ In an era where source code repositories have become critical assets, tools like
 ---
 
 *This guide covers the comprehensive capabilities of GitRepoEnum for automated GitHub security monitoring. Always ensure proper authorization before conducting security assessments and follow responsible disclosure practices when identifying vulnerabilities.*
+
 
 **⭐ If you found this guide helpful, don't forget to star the [GitRepoEnum repository](https://github.com/rix4uni/gitrepoenum) on GitHub!**
